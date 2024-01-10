@@ -23,7 +23,7 @@ and
 becomes
 
 ```
-°b°(x)°i°́à
+°b°(x)°í°à
 ```
 
 and 

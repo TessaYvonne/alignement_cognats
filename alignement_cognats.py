@@ -47,11 +47,53 @@ if ( is seen, add next letter without º
 make function to detect ) 
 if letter = ) :
 '''
-def reconstruction_PA80(raw_data):
-    return(raw_data)
+def reconstruction_PA80(raw_data, token):
+    letters = list(raw_data)
+    if letters[0] != token:
+        return(raw_data)
+    result = ""
+    in_paren = False
+    for letter in letters[1:]:
+        if not in_paren:
+            result += token
+        result += letter
+        if letter == "(":
+            in_paren = True
+        else:
+            if letter == ")":
+                in_paren = False
+    return(result)
 
-reconstruction_testdata = reconstruction_PA80("º(a)ŋɔ́")
-expected_result = "º(a)ºŋºɔ"
+#reconstruction_testdata = reconstruction_PA80("ºaŋ")
+#expected_result = "ºaŋ"
+#if (reconstruction_testdata == expected_result):
+#    print("OK: reconstruction_testdata = {result}".format(result = expected_result))
+#else:
+#    print(f"reconstruction = '{reconstruction_testdata}' but expected {expected_result}")
+
+reconstruction_testdata = reconstruction_PA80("aŋ", "º")
+expected_result = "aŋ"
+if (reconstruction_testdata == expected_result):
+    print("OK: reconstruction_testdata = {result}".format(result = expected_result))
+else:
+    print(f"reconstruction = '{reconstruction_testdata}' but expected {expected_result}")
+
+reconstruction_testdata = reconstruction_PA80("ºa(ŋ)c", "º")
+expected_result = "ºaº(ŋ)ºc"
+if (reconstruction_testdata == expected_result):
+    print("OK: reconstruction_testdata = {result}".format(result = expected_result))
+else:
+    print(f"reconstruction = '{reconstruction_testdata}' but expected {expected_result}")
+
+reconstruction_testdata = reconstruction_PA80("aŋ", "*")
+expected_result = "aŋ"
+if (reconstruction_testdata == expected_result):
+    print("OK: reconstruction_testdata = {result}".format(result = expected_result))
+else:
+    print(f"reconstruction = '{reconstruction_testdata}' but expected {expected_result}")
+
+reconstruction_testdata = reconstruction_PA80("*a(ŋ)c", "*")
+expected_result = "*a*(ŋ)*c"
 if (reconstruction_testdata == expected_result):
     print("OK: reconstruction_testdata = {result}".format(result = expected_result))
 else:
