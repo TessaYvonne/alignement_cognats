@@ -47,6 +47,23 @@ if ( is seen, add next letter without º
 make function to detect ) 
 if letter = ) :
 '''
+def is_modifier(letter):
+    return (letter >= "\u02B0" and letter <= "\u02FF") or (letter >= "\u0300" and letter <= "\u036F")
+
+
+for character in ["\u02B0", "\u02FF", "\u0300", "\u036F"]:
+    if is_modifier(character):
+        print(f"OK: is_modifier {character} = modifier")
+    else:
+        print(f"expected {character} to be a modifier")
+
+if not is_modifier("\u0370"):
+    print("OK: is_modifier \u0370 = false")
+else:
+    print("expected \u0370 to not be a modifier")
+
+#testen met: haakje op eerste en laatste posities; lege str; leegte tussen haakjes;
+# meer dan één letter tussen haakjes; maar één haakje ipv twee
 def reconstruction_PA80(raw_data, token):
     letters = list(raw_data)
     if letters[0] != token:
@@ -55,7 +72,8 @@ def reconstruction_PA80(raw_data, token):
     in_paren = False
     for letter in letters[1:]:
         if not in_paren:
-            result += token
+            if not is_modifier(letter):
+                result += token
         result += letter
         if letter == "(":
             in_paren = True
@@ -94,6 +112,13 @@ else:
 
 reconstruction_testdata = reconstruction_PA80("*a(ŋ)c", "*")
 expected_result = "*a*(ŋ)*c"
+if (reconstruction_testdata == expected_result):
+    print("OK: reconstruction_testdata = {result}".format(result = expected_result))
+else:
+    print(f"reconstruction = '{reconstruction_testdata}' but expected {expected_result}")
+
+reconstruction_testdata = reconstruction_PA80("*á(ŋ)ć", "*")
+expected_result = "*á*(ŋ)*ć"
 if (reconstruction_testdata == expected_result):
     print("OK: reconstruction_testdata = {result}".format(result = expected_result))
 else:
