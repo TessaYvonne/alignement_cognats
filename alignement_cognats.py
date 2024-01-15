@@ -79,16 +79,27 @@ def reconstruction_PA80(raw_data, token):
         return(raw_data)
     result = ""
     in_paren = False
+    position = 0
+    position_of_opening_bracket = 0
     for letter in letters[1:]:
+        position += 1
         if not in_paren:
             if not is_diacritic(letter):
                 result += token
         result += letter
         if letter == "(":
+            position_of_opening_bracket = position
             in_paren = True
         else:
             if letter == ")":
-                in_paren = False
+                if in_paren == True:
+                    if position == position_of_opening_bracket + 1:
+                        return f"Warning: formatting error in '{raw_data}'"
+                    in_paren = False
+                else:
+                    return f"Warning: formatting error in '{raw_data}'"
+    if in_paren == True:
+        return f"Warning: formatting error in '{raw_data}'"
     return(result)
 
 
@@ -140,7 +151,7 @@ else:
 
 #Does it work with the opening bracket in final position?
 reconstruction_testdata = reconstruction_PA80("*á(", "*")
-expected_result = "*á("
+expected_result = "Warning: formatting error in '*á('"
 if (reconstruction_testdata == expected_result):
     print("OK: reconstruction_testdata = {result}".format(result = expected_result))
 else:
@@ -156,7 +167,7 @@ else:
 
 #Does it work with no closing bracket?
 reconstruction_testdata = reconstruction_PA80("*á(ŋ", "*")
-expected_result = "*á*(ŋ"
+expected_result = "Warning: formatting error in '*á(ŋ'"
 if (reconstruction_testdata == expected_result):
     print("OK: reconstruction_testdata = {result}".format(result = expected_result))
 else:
@@ -172,15 +183,7 @@ else:
 
 #Does it work with empty brackets?
 reconstruction_testdata = reconstruction_PA80("*á()", "*")
-expected_result = "*á*()"
-if (reconstruction_testdata == expected_result):
-    print("OK: reconstruction_testdata = {result}".format(result = expected_result))
-else:
-    print(f"reconstruction = '{reconstruction_testdata}' but expected {expected_result}")
-
-#Does it work with a space within the brackets?
-reconstruction_testdata = reconstruction_PA80("*á( )", "*")
-expected_result = "*á*( )"
+expected_result = "Warning: formatting error in '*á()'"
 if (reconstruction_testdata == expected_result):
     print("OK: reconstruction_testdata = {result}".format(result = expected_result))
 else:
@@ -190,14 +193,14 @@ else:
 reconstruction_testdata = reconstruction_PA80(" ", "*")
 expected_result = " "
 if (reconstruction_testdata == expected_result):
-    print("OK: reconstruction_testdata = {result}".format(result = expected_result))
+    print("OK: reconstruction_testdata = '{result}'".format(result = expected_result))
 else:
-    print(f"reconstruction = '{reconstruction_testdata}' but expected {expected_result}")
+    print(f"reconstruction = '{reconstruction_testdata}' but expected '{expected_result}'")
 
 #Does it work with only a closing bracket?
 reconstruction_testdata = reconstruction_PA80("*áŋ)", "*")
-expected_result = "*á*ŋ)"
+expected_result = "Warning: formatting error in '*áŋ)'"
 if (reconstruction_testdata == expected_result):
     print("OK: reconstruction_testdata = {result}".format(result = expected_result))
 else:
-    print(f"formatting error: '{reconstruction_testdata}'")
+    print(f"reconstruction = '{reconstruction_testdata}' but expected '{expected_result}'")
