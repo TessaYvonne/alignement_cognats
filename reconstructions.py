@@ -4,45 +4,7 @@ Code to align data from more than one language based on the position of the elem
 The positions are on the horizontal axis, the words in the different languages on the vertical axis.
 The element of each word is aligned: the first consonant in C1, the first vowel in V1, etc.
 """
-
-# DATA CLEANING SECTION
-'''
-First, we strip the raw data of characters that are not necessary for the comparison analysis. 
-In my case, this is a slash separating singular and plural forms; elements between brackets, and prefixes.
-The function def cleanup_all combines all the clean-up functions together. 
-'''
-
-
-def cleanup_slash(raw_data):
-    index_of_slash = raw_data.find("/")
-    result = raw_data
-    if index_of_slash >= 0:
-        result = raw_data[:index_of_slash]
-    result = result.strip()
-    return result
-
-
-def cleanup_parenthesis(raw_data):
-    index_of_parenthesis = raw_data.find("(")
-    result = raw_data
-    if index_of_parenthesis >= 0:
-        result = raw_data[:index_of_parenthesis]
-    result = result.strip()
-    return result
-
-
-def cleanup_prefix(raw_data):
-    index_of_dash = raw_data.find("-")
-    result = raw_data
-    if index_of_dash >= 0:
-        result = raw_data[(index_of_dash + 1):]
-    result = result.strip()
-    return result
-
-
-def cleanup_all(raw_data):
-    return cleanup_prefix(cleanup_parenthesis(cleanup_slash(raw_data)))
-
+from cleanup import cleanup_all
 
 # RECONSTRUCTION SECTION
 '''

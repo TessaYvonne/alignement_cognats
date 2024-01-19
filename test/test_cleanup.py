@@ -1,4 +1,4 @@
-from alignement_cognats import cleanup_all
+from reconstructions import cleanup_all
 
 
 def test_cleanup():
