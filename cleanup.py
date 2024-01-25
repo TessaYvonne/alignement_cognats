@@ -48,4 +48,4 @@ def clean_data_to_csv(input_file_name, output_file_name):
             output_file.write('\n')
 
 
-clean_data_to_csv("test/test_data.csv", "clean_test_data.csv")
+#clean_data_to_csv("test/test_data.csv", "clean_test_data.csv")

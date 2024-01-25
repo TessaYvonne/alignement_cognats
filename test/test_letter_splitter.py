@@ -10,3 +10,7 @@ def test_letter_splitter_finds_kind_of_character() :
 
 def test_letter_splitter_splits_word():
     assert split_word("ɲɟà") == [{"letter": "ɲɟ", "is_consonant": True, "word": "à"}, {"letter": "à", "is_consonant": False, "word": ""}]
+    assert split_word("bw") == [{"letter": "b", "is_consonant": True, "word": "w"}, {"letter": "w", "is_consonant": True, "word": ""}]
+    assert split_word("àw") == [{"letter": "à", "is_consonant": False, "word": "w"}, {"letter": "w", "is_consonant": True, "word": ""}]
+
+

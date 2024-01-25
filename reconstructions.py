@@ -11,7 +11,7 @@ from cleanup import cleanup_all
 In this section, we work on reconstructed forms. I want the final table to reflect which elements are reconstructed.
 The code first looks for reconstructed words, indicated in the raw data with a º or a *.
 It then adds these characters to each element of the word before aligning it in the final table.
-Brackets are ignored, as well as diacritics.
+Brackets are ignored, as well as diacritics, which are a separate unicode character.
 '''
 
 
@@ -51,6 +51,11 @@ def reconstruction(raw_data, tokens):
         return f"Warning: formatting error in '{raw_data}'"
     return result
 
+column_headers = ["nº","FR","PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","BC (BLR3)","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
+'''
+This part of the code reads a data file formatted as a table. It first skips the line containing the column headers.
+Then it splits lines into cells. The words in the cells are added to a Python dictionary, and coupled with the column headings.
+'''
 
 def read_and_process_data(datafile):
     with open(datafile) as file:
@@ -62,14 +67,14 @@ def read_and_process_data(datafile):
             if skip_line:
                 skip_line = False
                 continue
-            cells = line.split(';')
-            words = []
+            cells = line.split('","')
+            words = {}
             word_count = 0
             for cell in cells:
                 if word_count <= 1:
-                    words.append(cell.strip())
+                    words.update({column_headers[word_count]:cell.strip()})
                 else:
-                    words.append(reconstruction(cleanup_all(cell), ["*", "º", "°"]))
+                    words.update({column_headers[word_count]:reconstruction(cleanup_all(cell), ["*", "º", "°"])})
                 word_count += 1
             result.append(words)
     return result

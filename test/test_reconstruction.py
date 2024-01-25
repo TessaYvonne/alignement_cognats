@@ -63,9 +63,7 @@ def test_reconstructions_adds_special_token():
 
 def test_read_and_process_data():
     data = read_and_process_data("test_data_one_line.csv")
-    assert data == [
-        ["1.", "abandonner 1", "ºcºìºnºà", "", "", "cìn", "", "cìnè", "", "", "", "cììnò", "", "", "",
-         "*c*ì*n*e", "", "", ""]]
+    assert data == [{"nº": "1.","FR": "abandonner 1","PA80": "ºcºìºnºà","swo": "","gyeli": "","bekwel": "cìn","bekol":"","konzime":"cìnè","makaa":"","mpiemo":"","kwasio":"","njyem":"cììnò","shiwa":"","BC (BLR3)":"*c*ì*n*e","Reconstr. Régionales (BLR 3)":"","Reconstr. Mougiama, Hombert":""}]
 
 
 def test_is_diacritic():
