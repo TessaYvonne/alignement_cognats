@@ -36,6 +36,9 @@ def test_error_is_returned_if_closing_parenthesis_is_missing():
 def test_tokens_are_added_to_string_with_more_than_one_element_between_parentheses():
     assert reconstruction("*á(ŋb)", ["*"]) == "*á*(ŋb)"
 
+def test_temp():
+    assert reconstruction("*ci", ["*"]) == "*c*i"
+
 
 def test_token_is_added_with_empty_string_in_parentheses():
     assert reconstruction("*á()", ["*"]) == "Warning: formatting error in '*á()'"
@@ -63,7 +66,11 @@ def test_reconstructions_adds_special_token():
 
 def test_read_and_process_data():
     data = read_and_process_data("test_data_one_line.csv")
-    assert data == [{"nº": "1.","FR": "abandonner 1","PA80": "ºcºìºnºà","swo": "","gyeli": "","bekwel": "cìn","bekol":"","konzime":"cìnè","makaa":"","mpiemo":"","kwasio":"","njyem":"cììnò","shiwa":"","BC (BLR3)":"*c*ì*n*e","Reconstr. Régionales (BLR 3)":"","Reconstr. Mougiama, Hombert":""}]
+    expected = [
+        {"nº": "1.", "FR": "abandonner 1", "PA80": "ºcºìºnºà", "swo": "", "gyeli": "", "bekwel": "cìn", "bekol": "",
+         "konzime": "cìnè", "makaa": "", "mpiemo": "", "kwasio": "", "njyem": "cììnò", "shiwa": "",
+         "BC (BLR3)": "", "Reconstr. Régionales (BLR 3)": "", "Reconstr. Mougiama, Hombert": "*c*ì*n*e"}]
+    assert data == expected
 
 
 def test_is_diacritic():
