@@ -1,0 +1,64 @@
+from letter_splitter import split_words_in_a_file
+
+columns = ["C1a", "C1b", "V1a", "V1b", "C2a", "C2b", "V2a", "V2b", "C3a", "C3b", "V3a", "V3b"]
+languages = ["swo", "gyeli", "bekwel", "bekol", "konzime", "makaa", "mpiemo", "kwasio", "njyem", "shiwa"]
+
+
+def letters_to_output(data):
+    letters = {}
+    column = 0
+    for letter in data:
+        if letter["is_consonant"]:
+            while columns[column].startswith('V'):
+                letters[columns[column]] = ''
+                column += 1
+        else:
+            while columns[column].startswith('C'):
+                letters[columns[column]] = ''
+                column += 1
+        letters[columns[column]] = letter["letter"]
+        column += 1
+
+    while column < len(columns):
+        letters[columns[column]] = ""
+        column += 1
+    return letters
+
+
+def word_to_output(word):
+    data = []
+    title = [word['line'], word['FR']]
+    for i in range(2, 14):
+        title.append('')
+    data.append(title)
+
+    data.append(['', ''] + columns)
+
+    language_data = word['languages']
+    for language in languages:
+        line = ['', language]
+        for column in columns:
+            line.append(letters_to_output(language_data[language])[column])
+        data.append(line)
+
+    empty_line = ['']
+    for i in range(1,14):
+        empty_line.append('')
+    data.append(empty_line)
+
+    return data
+
+
+def word_to_csv(matrix):
+    lines = []
+    for line in matrix:
+        output_line = ''
+        for column in line:
+            output_line += '"' + column + '";'
+        lines.append(output_line.strip(";"))
+    return lines
+
+
+def write_output_to_file(outputfile, matrix):
+    for line in matrix:
+        outputfile.write(line + '\n')

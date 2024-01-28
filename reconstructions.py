@@ -70,7 +70,7 @@ def read_and_process_data(datafile):
             if skip_line:
                 skip_line = False
                 continue
-            cells = line.split(';')
+            cells = line.split(';')[:len(column_headers)]
             words = {}
             word_count = 0
             for cell in cells:
