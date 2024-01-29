@@ -1,12 +1,12 @@
 from letter_splitter import split_words_in_a_file
-from output import word_to_csv, write_output_to_file, word_to_output
+from output import matrix_to_csv, write_output_to_file, word_data_to_csv
 import argparse
 
 def analyze_spreadsheet(datafile, outputfile):
     with open(outputfile, "w") as file:
         words = split_words_in_a_file(datafile)
         for word in words:
-            one_word = word_to_csv(word_to_output(word))
+            one_word = matrix_to_csv(word_data_to_csv(word))
             write_output_to_file(file, one_word)
 
 
