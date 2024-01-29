@@ -17,6 +17,11 @@ def test_letter_splitter_splits_word():
                                  {"letter": "w", "is_consonant": True, "word": ""}]
 
 
+def test_letter_splitter_rejects_unknown_letters():
+    assert split_word("a$̀") == [{"letter": "a", "is_consonant": False, "word": "$̀"},
+                                {"letter": "error", "is_consonant": False,  "word": "$̀"}]
+
+
 def test_split_words_in_a_file():
     assert (split_words_in_a_file("line9.csv") ==
             [{'line': '9.', 'FR': 'accoucher',

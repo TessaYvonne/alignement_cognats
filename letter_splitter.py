@@ -38,8 +38,11 @@ This part of the code splits words into letters. It then calls for the get_first
 
 def split_word(word):
     result_letter_data = []
-    while len(word) > 0:
+    error_found = False
+    while len(word) > 0 and not error_found:
         letter_data = get_first_letter(word)
+        if letter_data["letter"] == "error":
+            error_found = True
         result_letter_data.append(letter_data)
         word = letter_data["word"]
     return result_letter_data
