@@ -1,11 +1,22 @@
-columns = ["C1a", "C1b", "V1a", "V1b", "C2a", "C2b", "V2a", "V2b", "C3a", "C3b", "V3a", "V3b"]
+# columns = ["C1a", "C1b", "V1a", "V1b", "C2a", "C2b", "V2a", "V2b", "C3a", "C3b", "V3a", "V3b"]
 languages = ["swo", "gyeli", "bekwel", "bekol", "konzime", "makaa", "mpiemo", "kwasio", "njyem", "shiwa"]
+
+columns = []
+for i in range(1, 20):
+    columns.append(f'C{i}a')
+    columns.append(f'C{i}b')
+    columns.append(f'V{i}a')
+    columns.append(f'V{i}b')
 
 
 def letters_to_output_format(data):
     letters = {}
     column = 0
     for letter in data:
+        # print(f'{column}, {letter}')
+        if column >= len(columns):
+            print(f'too long: {column}, {letter}')
+            return letters
         if letter["is_consonant"]:
             while columns[column].startswith('V'):
                 letters[columns[column]] = ''

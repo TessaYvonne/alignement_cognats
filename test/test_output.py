@@ -43,3 +43,8 @@ def test_output_to_csv():
                  '"";"shiwa";"b";"j";"à";"";"";"";"";"";"";"";"";""',
                  '"";"";"";"";"";"";"";"";"";"";"";"";"";""']
     assert matrix_to_csv(word_data_to_csv(split_words_in_a_file('line9.csv')[0])) == expected
+
+
+def test_long_word():
+    assert matrix_to_csv(word_data_to_csv(split_words_in_a_file('test_long_word.csv')[0])) == []
+

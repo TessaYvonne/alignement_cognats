@@ -10,5 +10,5 @@ with codecs.open('test.txt', encoding='utf-16') as f:
         print ("----------")
 
 
-â
+
 # https://en.wikipedia.org/wiki/List_of_Unicode_characters#Phonetic_scripts
