@@ -1,3 +1,5 @@
+from reconstructions import tokens
+
 from reconstructions import read_and_process_data
 
 consonants = ["C","Ǹ","N","T","K","w","y","j","p","b","ɓ","t","d","ɗ","c","ɟ","k","g","ɡ","ʔ","m","n","ɲ","ŋ","ɳ","ɾ","r","f","v","s","z","ʃ","ʒ","h","l","ɥ","mp","mb","nt","nd","nc","nɟ","ɲɟ","nk","ŋk","ng","ŋg","nɡ","ŋɡ","nz","nʒ","pf","bv","tf","dv","kf","gv","ɡv","kp","gb","ɡb","bl","b̥","g̥","ɡ̥","d̥"]
@@ -10,6 +12,10 @@ If the character is not in the consonant list, it will check the vowel list, and
 
 def get_first_letter(word):
     candidate_consonant = ""
+    the_token = ""
+    if word[0] in tokens:
+        the_token = word[0]
+        word = word[1:]
     for consonant in consonants:
         if word.startswith(consonant):
             if len(consonant) > len(candidate_consonant):
@@ -24,8 +30,8 @@ def get_first_letter(word):
             print("error: {word} starts with unknown character".format(word=word))
             return {"letter": "error", "is_consonant": False, "word": word}
         else:
-            return {"letter": candidate_vowel, "is_consonant": False, "word": word.removeprefix(candidate_vowel)}
-    return {"letter": candidate_consonant, "is_consonant": True, "word": word.removeprefix(candidate_consonant)}
+            return {"letter": the_token + candidate_vowel, "is_consonant": False, "word": word.removeprefix(candidate_vowel)}
+    return {"letter": the_token + candidate_consonant, "is_consonant": True, "word": word.removeprefix(candidate_consonant)}
 
 
 '''
@@ -45,8 +51,8 @@ def split_word(word):
     return result_letter_data
 
 
-splittable_columns = ["swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
-languages = ["swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa"]
+splittable_columns = ["PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
+languages = ["PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
 
 
 def split_words_in_a_line(line):

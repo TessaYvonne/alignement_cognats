@@ -22,10 +22,24 @@ def test_letter_splitter_rejects_unknown_letters():
                                 {"letter": "error", "is_consonant": False,  "word": "$̀"}]
 
 
+def test_letter_splitter_accepts_special_tokens():
+    assert split_word("°à°w") == [{"letter": "°à", "is_consonant": False, "word": "°w"},
+                                 {"letter": "°w", "is_consonant": True, "word": ""}]
+    assert split_word("*à*w") == [{"letter": "*à", "is_consonant": False, "word": "*w"},
+                                 {"letter": "*w", "is_consonant": True, "word": ""}]
+
+
 def test_split_words_in_a_file():
     assert (split_words_in_a_file("line9.csv") ==
             [{'line': '9.', 'FR': 'accoucher',
-              'languages': {'swo':
+              'languages':{'PA80': [{'is_consonant': True,
+                                     'letter': '°b',
+                                     'word': '°í°à'},
+                                    {'is_consonant': False,
+                                     'letter': '°í',
+                                     'word': '°à'},
+                                    {'is_consonant': False, 'letter': '°à', 'word': ''}],
+                            'swo':
                                 [{'letter': 'b',
                                   'is_consonant': True,
                                   'word': 'yâ'},

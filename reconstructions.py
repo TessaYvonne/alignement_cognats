@@ -58,7 +58,7 @@ Then it splits lines into cells. The words in the cells are added to a Python di
 '''
 
 column_headers = ["nº","FR","PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","BC (BLR3)","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
-
+tokens = ["*", "º", "°"]
 
 def read_and_process_data(datafile):
     with open(datafile) as file:
@@ -77,7 +77,7 @@ def read_and_process_data(datafile):
                 if word_count <= 1:
                     words.update({column_headers[word_count]:cell.strip()})
                 else:
-                    words.update({column_headers[word_count]:reconstruction(cleanup_all(cell), ["*", "º", "°"])})
+                    words.update({column_headers[word_count]:reconstruction(cleanup_all(cell), tokens)})
                 word_count += 1
             result.append(words)
     return result
