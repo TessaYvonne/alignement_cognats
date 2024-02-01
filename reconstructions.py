@@ -60,6 +60,7 @@ Then it splits lines into cells. The words in the cells are added to a Python di
 column_headers = ["nº","FR","PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","BC (BLR3)","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
 tokens = ["*", "º", "°"]
 
+
 def read_and_process_data(datafile):
     with open(datafile) as file:
         result = []

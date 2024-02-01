@@ -48,7 +48,6 @@ def word_data_to_csv(word):
         for language in languages:
             line = ['', language]
             for column in columns:
-                # line.append(letters_to_output_format(language_data[language])[column])
                 one_language = language_data[language]
                 output_format = letters_to_output_format(one_language)
                 line.append(output_format[column])

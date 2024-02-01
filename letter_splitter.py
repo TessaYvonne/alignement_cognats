@@ -10,7 +10,7 @@ If the character is not in the consonant list, it will check the vowel list, and
 '''
 
 
-def get_first_letter(remainder, word):
+def get_first_letter(remainder, word, line_number):
     candidate_consonant = ""
     the_token = ""
     if remainder[0] in tokens:
@@ -27,7 +27,7 @@ def get_first_letter(remainder, word):
                 if len(vowel) > len(candidate_vowel):
                     candidate_vowel = vowel
         if candidate_vowel == "":
-            print("error: {remainder} in {word} starts with unknown character {letter}".format(remainder=remainder, word=word, letter=hex(ord(remainder[0]))))
+            print("error on line {line_number}: '{remainder}' in '{word}' starts with unknown character '{letter}'".format(line_number=line_number, remainder=remainder, word=word, letter=hex(ord(remainder[0]))))
             return {"letter": "error", "is_consonant": False, "word": remainder}
         else:
             return {"letter": the_token + candidate_vowel, "is_consonant": False, "word": remainder.removeprefix(candidate_vowel)}
@@ -39,12 +39,12 @@ This part of the code splits words into letters. It then calls for the get_first
 '''
 
 
-def split_word(word):
+def split_word(word,line_number):
     result_letter_data = []
     error_found = False
     remainder = word
     while len(remainder) > 0 and not error_found:
-        letter_data = get_first_letter(remainder, word)
+        letter_data = get_first_letter(remainder, word, line_number)
         if letter_data["letter"] == "error":
             error_found = True
         result_letter_data.append(letter_data)
@@ -56,18 +56,20 @@ splittable_columns = ["PA80","swo","gyeli","bekwel","bekol","konzime","makaa","m
 languages = ["PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
 
 
-def split_words_in_a_line(line):
+def split_words_in_a_line(line, line_number):
     split_words = {}
     for column in splittable_columns:
         if column in line:
-            split_words.update({column: split_word(line[column])})
+            split_words.update({column: split_word(line[column], line_number)})
     return split_words
 
 
 def split_words_in_a_file(datafile):
     data = read_and_process_data(datafile)
     split_lines = []
+    line_number = 0
     for line in data:
-        split_words = split_words_in_a_line(line)
+        split_words = split_words_in_a_line(line, line_number)
         split_lines.append({'line': line['nº'], 'FR': line['FR'], 'languages':split_words})
+        line_number += 1
     return split_lines
