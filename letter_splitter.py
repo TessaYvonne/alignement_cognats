@@ -10,28 +10,28 @@ If the character is not in the consonant list, it will check the vowel list, and
 '''
 
 
-def get_first_letter(word):
+def get_first_letter(remainder, word):
     candidate_consonant = ""
     the_token = ""
-    if word[0] in tokens:
-        the_token = word[0]
-        word = word[1:]
+    if remainder[0] in tokens:
+        the_token = remainder[0]
+        remainder = remainder[1:]
     for consonant in consonants:
-        if word.startswith(consonant):
+        if remainder.startswith(consonant):
             if len(consonant) > len(candidate_consonant):
                 candidate_consonant = consonant
     if candidate_consonant == "":
         candidate_vowel = ""
         for vowel in vowels:
-            if word.startswith(vowel):
+            if remainder.startswith(vowel):
                 if len(vowel) > len(candidate_vowel):
                     candidate_vowel = vowel
         if candidate_vowel == "":
-            print("error: {word} starts with unknown character".format(word=word))
-            return {"letter": "error", "is_consonant": False, "word": word}
+            print("error: {remainder} in {word} starts with unknown character {letter}".format(remainder=remainder, word=word, letter=hex(ord(remainder[0]))))
+            return {"letter": "error", "is_consonant": False, "word": remainder}
         else:
-            return {"letter": the_token + candidate_vowel, "is_consonant": False, "word": word.removeprefix(candidate_vowel)}
-    return {"letter": the_token + candidate_consonant, "is_consonant": True, "word": word.removeprefix(candidate_consonant)}
+            return {"letter": the_token + candidate_vowel, "is_consonant": False, "word": remainder.removeprefix(candidate_vowel)}
+    return {"letter": the_token + candidate_consonant, "is_consonant": True, "word": remainder.removeprefix(candidate_consonant)}
 
 
 '''
@@ -42,12 +42,13 @@ This part of the code splits words into letters. It then calls for the get_first
 def split_word(word):
     result_letter_data = []
     error_found = False
-    while len(word) > 0 and not error_found:
-        letter_data = get_first_letter(word)
+    remainder = word
+    while len(remainder) > 0 and not error_found:
+        letter_data = get_first_letter(remainder, word)
         if letter_data["letter"] == "error":
             error_found = True
         result_letter_data.append(letter_data)
-        word = letter_data["word"]
+        remainder = letter_data["word"]
     return result_letter_data
 
 

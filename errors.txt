@@ -1,0 +1,83 @@
+error:  ~ bìntʃú in ʃú ~ bìntʃú starts with unknown character 0x20
+error:  °? in °ɟ°à°ŋ°a° °? starts with unknown character 0x20
+error:  °? in °ɟ°à°k°â°s° °? starts with unknown character 0x20
+error: ̰ḭ̀ in sḭ́ḭ̀ starts with unknown character 0x330
+error: ̰ɛlɛ in tsḭ́ɛlɛ starts with unknown character 0x330
+error: ̰ɛ̰̀lɛ in bwɛ̰́ɛ̰̀lɛ starts with unknown character 0x330
+error: ̰ in nyɔ́nyɔ̰̂ starts with unknown character 0x330
+error: ̥áŋál in ɟ̥áŋál starts with unknown character 0x325
+error: ̰ in dvṵ̌ starts with unknown character 0x330
+error: ,* *k*ʊ̀*ʊ̀*ɡ*ó in *k*ʊ̀*ɡ*ʊ́*,* *k*ʊ̀*ʊ̀*ɡ*ó starts with unknown character 0x2c
+error: , bòa in bwà, bòa starts with unknown character 0x2c
+error: ̰ in dyṵ̂ starts with unknown character 0x330
+error: ̥ô in ɲɟ̥ô starts with unknown character 0x325
+error: ̰ in lâ̰ starts with unknown character 0x330
+error: ̰ in mgbà̰ starts with unknown character 0x330
+error: ̰ in tsḭ́ starts with unknown character 0x330
+error: ʰ in b̥áʰ starts with unknown character 0x2b0
+error: ̰ in là̰ starts with unknown character 0x330
+error: ̰ in tsḭ̂ starts with unknown character 0x330
+error: ̰ in lâ̰ starts with unknown character 0x330
+error: ̰ in kɔ̰̂ starts with unknown character 0x330
+error: , bòɡó in bòkó, bòɡó starts with unknown character 0x2c
+error:  ~ ǹʃə̀ʔ in ʒwə̀ʔ ~ ǹʃə̀ʔ starts with unknown character 0x20
+error: ̂ŋ in ɟÔŋ starts with unknown character 0x302
+error: ̰ in gyɛ̰̂ starts with unknown character 0x330
+error: ̰ in ùdâ̰ starts with unknown character 0x330
+error: ̂°ŋ in °ɟ°Ô°ŋ starts with unknown character 0x302
+error: ̰ in dyṵ̂ starts with unknown character 0x330
+error:  *? in *j*e*ɡ*ʊ* *? starts with unknown character 0x20
+error: ̰ in sɔ̰̀ starts with unknown character 0x330
+error: ̰lɛ in gyâ̰lɛ starts with unknown character 0x330
+error: ̰ in bɔ̰́ starts with unknown character 0x330
+error: ̰língɔ̰́lì in ngɔ̰̀língɔ̰́lì starts with unknown character 0x330
+error: ̥ìl in ɟ̥ìl starts with unknown character 0x325
+error: _ in °k°V̀°K°_ starts with unknown character 0x5f
+error: ? in °t°ɔ́°V́°? starts with unknown character 0x3f
+error: ̰ in wâ̰ starts with unknown character 0x330
+error: ̰ngá̰ in ngà̰ngá̰ starts with unknown character 0x330
+error: ̰ṵ̀ in tṵ́ṵ̀ starts with unknown character 0x330
+error: ̰ in ùdṵ̂ starts with unknown character 0x330
+error:  *? in *j*à*m*b*ì* *? starts with unknown character 0x20
+error: ̰ in mbḛ̀ starts with unknown character 0x330
+error: ̰ in lṵ̂ starts with unknown character 0x330
+error: _ in °ɡ°ú°_ starts with unknown character 0x5f
+error:  °? in °p°ɛ́°m°b°a° °? starts with unknown character 0x20
+error: ̰ in kwǎ̰ starts with unknown character 0x330
+error: ̥èbàl in ɟ̥èbàl starts with unknown character 0x325
+error: ̰ɔ̰́ in dyɔ̰̀ɔ̰́ starts with unknown character 0x330
+error: ̰ in bâ̰ starts with unknown character 0x330
+error: ̰ in lá̰ starts with unknown character 0x330
+error: ̂°s in °b°V̂°s starts with unknown character 0x302
+error: ̰ in â̰ starts with unknown character 0x330
+error: ̰ in nyâ̰ starts with unknown character 0x330
+error: ̰ in ngwɛ̰̌ starts with unknown character 0x330
+error: ̂°s in °p°Ê°s starts with unknown character 0x302
+error: ̰ in ndzḭ̀ starts with unknown character 0x330
+error: ̥òŋ in ɟ̥òŋ starts with unknown character 0x325
+error: ̥ in ɡúlùr̥ starts with unknown character 0x325
+error:  °?° °E°m°p°r°u°n°t°? in °p°Ò°p°Ó° °?° °E°m°p°r°u°n°t°? starts with unknown character 0x20
+error: ̰ in púɔ̰̀ starts with unknown character 0x330
+error: ̰ in sá̰ starts with unknown character 0x330
+error: ̂ in °Ô starts with unknown character 0x302
+error: ̰ in kâ̰ starts with unknown character 0x330
+error: ̰ in pḛ́ starts with unknown character 0x330
+error: ̰ŋá in nṵ̀ŋá starts with unknown character 0x330
+error: ̰ in tâ̰ starts with unknown character 0x330
+error: ̰ in dà̰ starts with unknown character 0x330
+error: ̰ in nâ̰ starts with unknown character 0x330
+error: _ in °t°ó°_ starts with unknown character 0x5f
+error: ̰lɛ in kɔ̰̂lɛ starts with unknown character 0x330
+error: ̂ in °s°â°d°Ê starts with unknown character 0x302
+error: _ in °ɡ°w°à°_ starts with unknown character 0x5f
+error: ̰à̰ in nyṵ́à̰ starts with unknown character 0x330
+error: ̰à̰ in lṵ́à̰ starts with unknown character 0x330
+error: ̥éb in j̥éb starts with unknown character 0x325
+error: _ in °ɟ°í°s°_ starts with unknown character 0x5f
+error: ʸísàl in g̥ʸísàl starts with unknown character 0x2b8
+error:  °? in °k°ɔ́°b°V̀° °? starts with unknown character 0x20
+error: ̰ in sɔ̰̂ starts with unknown character 0x330
+error: ̂°V in °s°V̂°V starts with unknown character 0x302
+error: ̰ in vúdṵ̀ starts with unknown character 0x330
+error: ̰ in gâ̰ starts with unknown character 0x330
+no language data for ̀yɛ̃̀ yá m-ùdì"

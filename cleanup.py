@@ -33,8 +33,20 @@ def cleanup_prefix(raw_data):
     return result
 
 
+def remove_duplicate_tokens(raw_data):
+    if len(raw_data) == 0:
+        return raw_data
+    first_letter_is_token = raw_data[0] in ["*", "º", "°"]
+    result = raw_data
+    for token in ["*", "º", "°"]:
+        result = result.replace(token,"")
+    if first_letter_is_token:
+        result = raw_data[0] + result
+    return result
+
+
 def cleanup_all(raw_data):
-    return cleanup_prefix(cleanup_parenthesis(cleanup_slash(raw_data)))
+    return remove_duplicate_tokens(cleanup_prefix(cleanup_parenthesis(cleanup_slash(raw_data))))
 
 
 def clean_data_to_csv(input_file_name, output_file_name):
