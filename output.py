@@ -81,11 +81,15 @@ def write_output_to_file(outputfile, matrix):
 def word_to_html_page(word):
     html: str = f'<html><head><title>{word["FR"]}</title></head><body><h1>{word["FR"]}</h1>'
     html += '<table><tr><th></th>'
+
+    language_data = word['languages']
+    # todo: fix longest row algorithm
+    # number_of_columns = find_longest_row(language_data)
+
     for column in columns:
         html += f'<th>{column}</th>'
     html += '</tr>'
 
-    language_data = word['languages']
     for language in languages:
         html += f'<tr><td>{language}</td>'
         one_language = language_data[language]
@@ -96,6 +100,16 @@ def word_to_html_page(word):
 
     html += '</table></body></html>'
     return html
+
+
+def find_longest_row(languages):
+    longest_row = 0
+    for language in languages:
+        length = len(languages[language])
+        if length > longest_row:
+            longest_row = length
+
+    return longest_row
 
 
 def word_to_file_name(word):
