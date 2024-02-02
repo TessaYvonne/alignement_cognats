@@ -1,3 +1,5 @@
+import os
+
 languages = ["PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
 
 columns = []
@@ -97,9 +99,10 @@ def word_to_html_page(word):
 
 
 def word_to_file_name(word):
-    return word['FR'].replace(' ', '_').replace('/', '_').replace('?', '_').replace('!', '_').replace(';', '_').replace(':', '_').replace(',', '_').replace('.', '_').replace('(', '_').replace(')', '_').replace('\'', '_').replace('"', '_').replace('’', '_').replace('‘', '_').replace('“', '_').replace('”', '_').replace('„', '_').replace('‚', '_') + ".html"
+    return word.replace(' ', '_').replace('/', '_').replace('(', '_').replace(')', '_') + ".html"
 
 
 def cleanup_output_folder(outputfolder):
     import shutil
     shutil.rmtree(outputfolder)
+    os.makedirs(outputfolder, exist_ok=True)
