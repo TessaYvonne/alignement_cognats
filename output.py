@@ -74,3 +74,32 @@ def matrix_to_csv(matrix):
 def write_output_to_file(outputfile, matrix):
     for line in matrix:
         outputfile.write(line + '\n')
+
+
+def word_to_html_page(word):
+    html: str = f'<html><head><title>{word["FR"]}</title></head><body><h1>{word["FR"]}</h1>'
+    html += '<table><tr><th></th>'
+    for column in columns:
+        html += f'<th>{column}</th>'
+    html += '</tr>'
+
+    language_data = word['languages']
+    for language in languages:
+        html += f'<tr><td>{language}</td>'
+        one_language = language_data[language]
+        output_format = letters_to_output_format(one_language)
+        for column in columns:
+            html += f'<td>{output_format[column]}</td>'
+        html += '</tr>'
+
+    html += '</table></body></html>'
+    return html
+
+
+def word_to_file_name(word):
+    return word['FR'].replace(' ', '_').replace('/', '_').replace('?', '_').replace('!', '_').replace(';', '_').replace(':', '_').replace(',', '_').replace('.', '_').replace('(', '_').replace(')', '_').replace('\'', '_').replace('"', '_').replace('’', '_').replace('‘', '_').replace('“', '_').replace('”', '_').replace('„', '_').replace('‚', '_') + ".html"
+
+
+def cleanup_output_folder(outputfolder):
+    import shutil
+    shutil.rmtree(outputfolder)
