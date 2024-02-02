@@ -46,7 +46,7 @@ def remove_duplicate_tokens(raw_data):
 
 
 def cleanup_all(raw_data):
-    return remove_duplicate_tokens(cleanup_prefix(cleanup_parenthesis(cleanup_slash(raw_data))))
+    return remove_duplicate_tokens(cleanup_prefix(cleanup_parenthesis(cleanup_slash(raw_data)))).replace(" ","")
 
 
 def clean_data_to_csv(input_file_name, output_file_name):
