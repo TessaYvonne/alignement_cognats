@@ -83,10 +83,9 @@ def word_to_html_page(word):
     html += '<table><tr><th></th>'
 
     language_data = word['languages']
-    # todo: fix longest row algorithm
-    # number_of_columns = find_longest_row(language_data)
+    number_of_columns = find_longest_row(language_data)
 
-    for column in columns:
+    for column in columns[:number_of_columns]:
         html += f'<th>{column}</th>'
     html += '</tr>'
 
@@ -94,7 +93,7 @@ def word_to_html_page(word):
         html += f'<tr><td>{language}</td>'
         one_language = language_data[language]
         output_format = letters_to_output_format(one_language)
-        for column in columns:
+        for column in columns[:number_of_columns]:
             html += f'<td>{output_format[column]}</td>'
         html += '</tr>'
 
@@ -102,14 +101,25 @@ def word_to_html_page(word):
     return html
 
 
-def find_longest_row(languages):
-    longest_row = 0
-    for language in languages:
-        length = len(languages[language])
-        if length > longest_row:
-            longest_row = length
+def find_last_non_empty_index(columns):
+    i = 0
+    last_non_empty = 0
+    for column in columns:
+        if columns[column] != "":
+            last_non_empty = i
+        i += 1
+    return last_non_empty + 1
 
-    return longest_row
+
+def find_longest_row(languages):
+    length_longest_row = 0
+    for language in languages:
+        one_language = languages[language]
+        output_format = letters_to_output_format(one_language)
+        length_current_row = find_last_non_empty_index(output_format)
+        if length_current_row > length_longest_row:
+            length_longest_row = length_current_row
+    return length_longest_row
 
 
 def word_to_file_name(word):
