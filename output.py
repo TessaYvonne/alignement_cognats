@@ -1,3 +1,5 @@
+import os
+
 languages = ["PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
 
 columns = []
@@ -74,3 +76,57 @@ def matrix_to_csv(matrix):
 def write_output_to_file(outputfile, matrix):
     for line in matrix:
         outputfile.write(line + '\n')
+
+
+def word_to_html_page(word):
+    html: str = f'<html><head><title>{word["FR"]}</title></head><body><h1>{word["FR"]}</h1>'
+    html += '<table><tr><th></th>'
+
+    language_data = word['languages']
+    number_of_columns = find_longest_row(language_data)
+
+    for column in columns[:number_of_columns]:
+        html += f'<th>{column}</th>'
+    html += '</tr>'
+
+    for language in languages:
+        html += f'<tr><td>{language}</td>'
+        one_language = language_data[language]
+        output_format = letters_to_output_format(one_language)
+        for column in columns[:number_of_columns]:
+            html += f'<td>{output_format[column]}</td>'
+        html += '</tr>'
+
+    html += '</table></body></html>'
+    return html
+
+
+def find_last_non_empty_index(columns):
+    i = 0
+    last_non_empty = 0
+    for column in columns:
+        if columns[column] != "":
+            last_non_empty = i
+        i += 1
+    return last_non_empty + 1
+
+
+def find_longest_row(languages):
+    length_longest_row = 0
+    for language in languages:
+        one_language = languages[language]
+        output_format = letters_to_output_format(one_language)
+        length_current_row = find_last_non_empty_index(output_format)
+        if length_current_row > length_longest_row:
+            length_longest_row = length_current_row
+    return length_longest_row
+
+
+def word_to_file_name(word):
+    return word.replace(' ', '_').replace('/', '_').replace('(', '_').replace(')', '_') + ".html"
+
+
+def cleanup_output_folder(outputfolder):
+    import shutil
+    shutil.rmtree(outputfolder)
+    os.makedirs(outputfolder, exist_ok=True)

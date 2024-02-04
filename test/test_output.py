@@ -1,5 +1,5 @@
 from letter_splitter import split_words_in_a_file
-from output import letters_to_output_format, word_data_to_csv, matrix_to_csv
+from output import letters_to_output_format, word_data_to_csv, matrix_to_csv, columns, find_longest_row
 
 
 def test_swo_letter_data_is_correct():
@@ -52,3 +52,9 @@ def test_output_to_csv():
                  '"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";"";""']
     assert matrix_to_csv(word_data_to_csv(split_words_in_a_file('line9.csv')[0])) == expected
 
+
+def test_find_longest_row():
+    # split_lines.append({'line': line['nº'], 'FR': line['FR'], 'languages':split_words})
+    languages = split_words_in_a_file('line9.csv')[0]['languages']
+    longest_row = find_longest_row(languages)
+    assert longest_row == 4
