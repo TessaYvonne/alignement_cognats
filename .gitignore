@@ -3,3 +3,4 @@ x.csv
 .idea
 output/
 __pycache*
+.netlify

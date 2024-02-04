@@ -1,4 +1,5 @@
 import os
+import shutil
 
 languages = ["PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
 
@@ -127,6 +128,6 @@ def word_to_file_name(word):
 
 
 def cleanup_output_folder(outputfolder):
-    import shutil
-    shutil.rmtree(outputfolder)
+    if os.path.exists(outputfolder) and os.path.isdir(outputfolder):
+        shutil.rmtree(outputfolder)
     os.makedirs(outputfolder, exist_ok=True)
