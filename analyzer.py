@@ -1,6 +1,6 @@
 from letter_splitter import split_words_in_a_file, splittable_columns
 from output import matrix_to_csv, write_output_to_file, word_data_to_csv, word_to_html_page, word_to_file_name, \
-    cleanup_output_folder, word_data_to_normalized_csv
+    cleanup_output_folder
 import argparse
 
 from reconstructions import read_and_process_csv_file

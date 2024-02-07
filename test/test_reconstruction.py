@@ -89,7 +89,7 @@ def test_read_and_process_excel_file():
           'makaa': 'makaa1',
           'mpiemo': 'mpiemo1',
           'njyem': 'njyem1',
-          'nº': '1',
+          'nº': '1.',
           'shiwa': 'shiwa1',
           'swo': 'sow1'},
          {'BC (BLR3)': 'bc2',
@@ -105,7 +105,7 @@ def test_read_and_process_excel_file():
           'makaa': 'makaa2',
           'mpiemo': 'mpiemo2',
           'njyem': 'njyem2',
-          'nº': '2',
+          'nº': '2.',
           'shiwa': 'shiwa2',
           'swo': 'sow2'}]
     assert data == expected
