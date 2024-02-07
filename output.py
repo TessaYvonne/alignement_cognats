@@ -64,6 +64,15 @@ def word_data_to_csv(word):
     return data
 
 
+def word_data_to_normalized_csv(word):
+    data = [word['line'], word['FR']]
+    language_data = word['languages']
+    for language in language_data:
+        data.append(language)
+    return data
+#split_lines.append({'line': line['nº'], 'FR': line['FR'], 'languages': split_words})
+
+
 def matrix_to_csv(matrix):
     lines = []
     for line in matrix:
