@@ -23,7 +23,7 @@ def to_website(words, outputfolder):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--datafile', dest='datafile', type=str, help='The file that contains the data to be analyzed', required=True)
+parser.add_argument('--datafile', dest='datafile', type=str, help='The file that contains the data to be analyzed. Both csv (;-separated) and xlsx are supported', required=True)
 parser.add_argument('--outputfile', dest='outputfile', type=str, help='The file that will contain the output', required=True)
 parser.add_argument('--outputfolder', dest='outputfolder', type=str, help='The folder that will contain the html files', required=True)
 args = parser.parse_args()

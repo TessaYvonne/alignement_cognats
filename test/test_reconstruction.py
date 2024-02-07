@@ -1,4 +1,4 @@
-from reconstructions import reconstruction, read_and_process_data, is_diacritic
+from reconstructions import reconstruction, read_and_process_csv_file, is_diacritic, read_and_process_excel_file
 
 
 def test_string_without_token_remains_unchanged():
@@ -64,12 +64,50 @@ def test_reconstructions_adds_special_token():
     assert reconstruction("á(ŋ)ć", ["*", "º", "°"]) == "á(ŋ)ć"
 
 
-def test_read_and_process_data():
-    data = read_and_process_data("test_data_one_line.csv")
+def test_read_and_process_csv_file():
+    data = read_and_process_csv_file("test_data_one_line.csv")
     expected = [
         {"nº": "1.", "FR": "abandonner 1", "PA80": "ºcºìºnºà", "swo": "", "gyeli": "", "bekwel": "cìn", "bekol": "",
          "konzime": "cìnè", "makaa": "", "mpiemo": "", "kwasio": "", "njyem": "cììnò", "shiwa": "",
          "BC (BLR3)": "", "Reconstr. Régionales (BLR 3)": "", "Reconstr. Mougiama, Hombert": "*c*ì*n*e"}]
+    assert data == expected
+
+
+def test_read_and_process_excel_file():
+    data = read_and_process_excel_file("3lines.xlsx")
+    expected = [
+        {'BC (BLR3)': 'bc1',
+          'FR': 'fr1',
+          'PA80': 'pa801',
+          'Reconstr. Mougiama, Hombert': 'mougiama1',
+          'Reconstr. Régionales (BLR 3)': 'blr1',
+          'bekol': 'bekol1',
+          'bekwel': 'bewel1',
+          'gyeli': 'gyeli1',
+          'konzime': 'konzime1',
+          'kwasio': 'kwasio1',
+          'makaa': 'makaa1',
+          'mpiemo': 'mpiemo1',
+          'njyem': 'njyem1',
+          'nº': '1',
+          'shiwa': 'shiwa1',
+          'swo': 'sow1'},
+         {'BC (BLR3)': 'bc2',
+          'FR': 'fr2',
+          'PA80': 'pa802',
+          'Reconstr. Mougiama, Hombert': 'mougiama2',
+          'Reconstr. Régionales (BLR 3)': 'blr2',
+          'bekol': 'bekol2',
+          'bekwel': 'bewel2',
+          'gyeli': 'gyeli2',
+          'konzime': 'konzime2',
+          'kwasio': 'kwasio2',
+          'makaa': 'makaa2',
+          'mpiemo': 'mpiemo2',
+          'njyem': 'njyem2',
+          'nº': '2',
+          'shiwa': 'shiwa2',
+          'swo': 'sow2'}]
     assert data == expected
 
 

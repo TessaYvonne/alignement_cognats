@@ -4,6 +4,8 @@ Code to align data from more than one language based on the position of the elem
 The positions are on the horizontal axis, the words in the different languages on the vertical axis.
 The element of each word is aligned: the first consonant in C1, the first vowel in V1, etc.
 """
+import pandas as pd
+
 from cleanup import cleanup_all
 
 # RECONSTRUCTION SECTION
@@ -61,7 +63,7 @@ column_headers = ["nº","FR","PA80","swo","gyeli","bekwel","bekol","konzime","ma
 tokens = ["*", "º", "°"]
 
 
-def read_and_process_data(datafile):
+def read_and_process_csv_file(datafile):
     with open(datafile) as file:
         result = []
         skip_line = True
@@ -81,4 +83,24 @@ def read_and_process_data(datafile):
                     words.update({column_headers[word_count]:reconstruction(cleanup_all(cell), tokens)})
                 word_count += 1
             result.append(words)
+    return result
+
+
+def read_and_process_excel_file(datafile):
+    result = []
+    df = pd.read_excel(datafile, engine='openpyxl')
+    for index, row in df.iterrows():
+        words = {}
+        word_count = 0
+        for column_name in column_headers:
+            if column_name == 'nº':
+                cell = str(int(row[column_name])) + '.'
+            else:
+                cell = row[column_name]
+            if word_count <= 1:
+                words.update({column_headers[word_count]:cell.strip()})
+            else:
+                words.update({column_headers[word_count]:reconstruction(cleanup_all(cell), tokens)})
+            word_count += 1
+        result.append(words)
     return result
