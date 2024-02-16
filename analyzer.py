@@ -27,7 +27,7 @@ def to_website(words, outputfolder):
 def to_normalized_csv_file(inputfile, outputfile):
     words = read_and_process_csv_file(inputfile)
     with open(outputfile, "w") as file:
-        file.write("nº;FR;PA80;swo;gyeli;bekwel;bekol;konzime;makaa;mpiemo;kwasio;njem;shiwa;BC (BLR3);Reconstr. Régionales (BLR 3);Reconstr. Mougiama, Hombert;;;;\n")
+        file.write("nº;FR;PA80;swo;gyeli;bekwel;bekol;konzime;makaa;mpiemo;kwasio;njem;shiwa;BC (BLR3);Reconstr. Régionales (BLR 3);Reconstr. Mougiama, Hombert\n")
         for word in words:
             output_line = ''
             output_line += word['nº'] + ';' + word['FR'] + ';'
