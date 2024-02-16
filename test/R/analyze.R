@@ -5,7 +5,7 @@
 # install.packages("data.table")
 # install.packages("ggplot2")
 # install.packages("ggrepel")
-install.packages("factoextra")
+# install.packages("factoextra")
 
 library(dplyr)
 library(readxl)
@@ -25,27 +25,17 @@ data <- fread("/Users/jan/dev/prive/tessa/alignement_cognats/cleanedUpTable.csv"
 
 # change the first row to be column names
 colnames(data) <- data[2,]
-print  (colnames(data))
+
 # remove the first row that we don't need anymore
 data <- data[-1,]
 # add back language names as a column
 data$Language <- rownames(data)
 # reorder the columns to have language first
 data <- data %>% select(Language, everything())
-print  (colnames(data))
+
 # removing spaces in colnames
 colnames(data) <- colnames(data) %>% str_replace(" ","_")
-# visual check
-# glimpse(data)
 
-
-
-xy1 <- colnames(data)
-
-# print(xy1)
-print(rownames(data))
-
-# dist_mat <- stringdist::stringdistmatrix(data$accoucher, data$accoucher,
 dist_mat <- stringdist::stringdistmatrix(data$"accoucher", data$"accoucher",
                                          method = "lv",
                                          useNames = "string")
@@ -92,16 +82,16 @@ cbind(fit$points[,1], fit$points[,2]) %>%
   # basic plot settings
   theme(legend.position = "top")
 
-ggsave("~/downloads/cbind.png", width = 10, height = 10, units = "cm")
+ggsave("~/downloads/distance.png", width = 10, height = 10, units = "cm")
 
-x <- fviz_nbclust(dist_mat, FUN = hcut, method = "silhouette") # + geom_vline(xintercept = 3, linetype = 2)
-ggsave("~/downloads/fviz_nbclust.png", width = 10, height = 10, units = "cm")
+fviz_nbclust(dist_mat, FUN = hcut, method = "silhouette") # + geom_vline(xintercept = 3, linetype = 2)
+ggsave("~/downloads/noOfClusters.png", width = 10, height = 10, units = "cm")
 
 # save the output of clustering
 hclust_avg <- hclust(dist_mat %>% as.dist())
 
 # cut the data into the required number of clusters
-clus = cutree(hclust_avg, 3)
+clus <- cutree(hclust_avg, 3)
 
 # change the format for a plot later
 test <- clus %>%
@@ -115,7 +105,9 @@ test <- clus %>%
 # match the order of rows in the data with the order of tip labels
 test <- test[match(names(clus), test$Name),]
 
-pdf("~/downloads/tree.pdf")
+
+
+pdf("~/downloads/dendrogram.pdf")
 
 # make a plot
 plot(# can use this line to make the plot horizontal instead of vertical
