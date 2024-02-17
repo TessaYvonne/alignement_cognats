@@ -21,6 +21,6 @@ List of tasks in order of priority
 - fix bug when reading xlsx file
 - add prefixes in the Pfx column
 - ~~add full words of each language into the matrix~~
-- reorder FR, PA80 and Reconstr.* rows to the bottom of each words' matrix
+- ~~reorder FR, PA80 and Reconstr.* rows to the bottom of each words' matrix~~
 - exclude FR, PA80 and Reconstr.* rows from graphs
 - celebrate if everything works!

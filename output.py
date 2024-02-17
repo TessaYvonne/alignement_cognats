@@ -1,7 +1,7 @@
 import os
 import shutil
 
-languages = ["PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
+languages = ["swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","PA80","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
 
 columns = []
 for i in range(1, 15):
