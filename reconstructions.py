@@ -4,6 +4,8 @@ Code to align data from more than one language based on the position of the elem
 The positions are on the horizontal axis, the words in the different languages on the vertical axis.
 The element of each word is aligned: the first consonant in C1, the first vowel in V1, etc.
 """
+import math
+
 import pandas as pd
 from textdistance import levenshtein
 
@@ -98,6 +100,8 @@ def read_and_process_excel_file(datafile):
                 cell = str(int(row[column_name])) + '.'
             else:
                 cell = row[column_name]
+            if type(cell) != str and math.isnan(cell):
+                cell = ""
             if word_count <= 1:
                 words.update({column_headers[word_count]:cell.strip()})
             else:

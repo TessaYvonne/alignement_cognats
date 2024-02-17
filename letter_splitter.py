@@ -61,6 +61,12 @@ This part of the code splits words into letters. It then calls for the get_first
 '''
 
 
+class Word:
+    def __init__(self, text, letters):
+        self.text = text
+        self.letters = letters
+
+
 def split_word(word, line_number):
     result_letter_data = []
     error_found = False
@@ -71,7 +77,7 @@ def split_word(word, line_number):
             error_found = True
         result_letter_data.append(letter_data)
         remainder = letter_data["word"]
-    return result_letter_data
+    return Word(word, result_letter_data)
 
 
 splittable_columns = ["PA80", "swo", "gyeli", "bekwel", "bekol", "konzime", "makaa", "mpiemo", "kwasio", "njyem",

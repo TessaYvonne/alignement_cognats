@@ -38,21 +38,21 @@ def letters_to_output_format(data):
 def word_data_to_csv(word):
     data = []
     title = [word['line'], word['FR']]
-    for i in range(2, len(columns)):
+    for i in range(2, len(columns)+1):
         title.append('')
     data.append(title)
 
-    data.append(['', ''] + columns)
+    data.append(['', '', ''] + columns)
 
     language_data = word['languages']
     if len(language_data) == 0:
         print (f'no language data for {word["line"]}')
     else:
         for language in languages:
-            line = ['', language]
+            one_language = language_data[language]
+            output_format = letters_to_output_format(one_language.letters)
+            line = ['', language, one_language.text]
             for column in columns:
-                one_language = language_data[language]
-                output_format = letters_to_output_format(one_language)
                 line.append(output_format[column])
             data.append(line)
 
@@ -104,7 +104,7 @@ def word_to_html_page(word):
     for language in languages:
         table_html += f'<tr><td>{language}</td>'
         one_language = language_data[language]
-        output_format = letters_to_output_format(one_language)
+        output_format = letters_to_output_format(one_language.letters)
         for column in columns[:number_of_columns]:
             table_html += f'<td>{output_format[column]}</td>'
         table_html += '</tr>'
@@ -127,7 +127,7 @@ def find_longest_row(languages):
     length_longest_row = 0
     for language in languages:
         one_language = languages[language]
-        output_format = letters_to_output_format(one_language)
+        output_format = letters_to_output_format(one_language.letters)
         length_current_row = find_last_non_empty_index(output_format)
         if length_current_row > length_longest_row:
             length_longest_row = length_current_row
