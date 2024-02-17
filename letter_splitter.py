@@ -66,6 +66,18 @@ class Word:
         self.text = text
         self.letters = letters
 
+    def __str__(self):
+        '{ text: ' + self.text + ', letters: ' + str(self.letters) + ' }'
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__dict__ == other.__dict__
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
 
 def split_word(word, line_number):
     result_letter_data = []
