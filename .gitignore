@@ -1,6 +1,8 @@
 words/
+experiment/
+output/
+
 x.csv
 .idea
-output/
 __pycache*
 .netlify

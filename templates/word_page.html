@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #aaaaaa;
+        }
+
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>accoucher</title>
+</head>
+<body class="container">
+
+<main class="ms-sm-auto col-lg-12 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2>${word}</h2>
+    </div>
+    <div class="table-responsive-md">
+        ${table}
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-4 mb-3 border-bottom">
+            <img src="./${word}Dendrogram.png" class="img-fluid mx-auto d-block" style="max-width: 500px; width:100%" alt="Dendogram">
+        </div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-4 mb-3 border-bottom">
+            <img src="./${word}NoOfClusters.png"  class="img-fluid mx-auto d-block" style="max-width: 500px; width:100%" alt="NumberOfClusters">
+        </div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-5 pb-2 mb-3 border-bottom">
+            <img src="./${word}Distance.png" class="img-fluid mx-auto d-block" style="max-width: 500px; width:100%" alt="Distance">
+        </div>
+    </div>
+</main>
+</body>
+</html>

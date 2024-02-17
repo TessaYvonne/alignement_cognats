@@ -89,26 +89,28 @@ def write_output_to_file(outputfile, matrix):
 
 
 def word_to_html_page(word):
-    html: str = f'<html><head><title>{word["FR"]}</title></head><body><h1>{word["FR"]}</h1>'
-    html += '<table><tr><th></th>'
-
+    with open('templates/word_page.html', 'r') as file:
+        html = file.read()
+    html = html.replace('${word}', word['FR'])
+    table_html = '''<table class="table table-striped table-sm">
+                 <thead class="thead-dark">
+                 <tr><th scope="row"></th>'''
     language_data = word['languages']
     number_of_columns = find_longest_row(language_data)
-
     for column in columns[:number_of_columns]:
-        html += f'<th>{column}</th>'
-    html += '</tr>'
+        table_html += f'<th>{column}</th>'
+    table_html += '</tr>'
 
     for language in languages:
-        html += f'<tr><td>{language}</td>'
+        table_html += f'<tr><td>{language}</td>'
         one_language = language_data[language]
         output_format = letters_to_output_format(one_language)
         for column in columns[:number_of_columns]:
-            html += f'<td>{output_format[column]}</td>'
-        html += '</tr>'
+            table_html += f'<td>{output_format[column]}</td>'
+        table_html += '</tr>'
 
-    html += '</table></body></html>'
-    return html
+    table_html += '</table>'
+    return html.replace('${table}', table_html)
 
 
 def find_last_non_empty_index(columns):

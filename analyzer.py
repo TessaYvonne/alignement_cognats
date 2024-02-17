@@ -15,19 +15,27 @@ def analyze_spreadsheet(words, outputfile):
 
 def to_website(words, outputfolder):
     cleanup_output_folder(outputfolder)
+    for word in words:
+        html_page = word_to_html_page(word)
+        file_name = word_to_file_name(word['FR'])
+        with open(f"{outputfolder}/{file_name}", "w") as file:
+            file.write(html_page)
+
+    with open("templates/index_page.html", "r") as file:
+        index_page = file.read()
     with open(f"{outputfolder}/index.html", "w") as index_file:
+        index_file.write(index_page)
         for word in words:
-            html_page = word_to_html_page(word)
             file_name = word_to_file_name(word['FR'])
             index_file.write(f'<a href="{file_name}">{word["FR"]}</a><br>')
-            with open(f"{outputfolder}/{file_name}", "w") as file:
-                file.write(html_page)
+        index_file.write('</main></body></html>')
 
 
 def to_normalized_csv_file(inputfile, outputfile):
     words = read_and_process_csv_file(inputfile)
     with open(outputfile, "w") as file:
-        file.write("nº;FR;PA80;swo;gyeli;bekwel;bekol;konzime;makaa;mpiemo;kwasio;njem;shiwa;BC (BLR3);Reconstr. Régionales (BLR 3);Reconstr. Mougiama, Hombert\n")
+        file.write(
+            "nº;FR;PA80;swo;gyeli;bekwel;bekol;konzime;makaa;mpiemo;kwasio;njem;shiwa;BC (BLR3);Reconstr. Régionales (BLR 3);Reconstr. Mougiama, Hombert\n")
         for word in words:
             output_line = ''
             output_line += word['nº'] + ';' + word['FR'] + ';'
@@ -38,10 +46,15 @@ def to_normalized_csv_file(inputfile, outputfile):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--datafile', dest='datafile', type=str, help='The file that contains the data to be analyzed. Both csv (;-separated) and xlsx are supported', required=True)
-parser.add_argument('--outputfile', dest='outputfile', type=str, help='The file that will contain the output', required=True)
-parser.add_argument('--outputfolder', dest='outputfolder', type=str, help='The folder that will contain the html files', required=True)
-parser.add_argument('--normalized-output-file', dest='normalized_output_file', type=str, help='The file that will contain the words in their cleand-up form', required=False)
+parser.add_argument('--datafile', dest='datafile', type=str,
+                    help='The file that contains the data to be analyzed. Both csv (;-separated) and xlsx are supported',
+                    required=True)
+parser.add_argument('--outputfile', dest='outputfile', type=str, help='The file that will contain the output',
+                    required=True)
+parser.add_argument('--outputfolder', dest='outputfolder', type=str, help='The folder that will contain the html files',
+                    required=True)
+parser.add_argument('--normalized-output-file', dest='normalized_output_file', type=str,
+                    help='The file that will contain the words in their cleand-up form', required=False)
 args = parser.parse_args()
 
 words = split_words_in_a_file(args.datafile)
