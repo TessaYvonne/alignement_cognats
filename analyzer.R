@@ -16,8 +16,10 @@ library(ggplot2)
 library(ggrepel)
 library(factoextra)
 
+rootFolder <- "./output"
+
 # read the main table
-data <- fread("./cleanedUpTable.csv") %>%
+data <- fread(paste(rootFolder, "normalized.csv", sep="/")) %>%
   # flip the order of rows and columns
   t() %>%
   # change the format to data frame
@@ -35,6 +37,8 @@ data <- data %>% select(Language, everything())
 
 # removing spaces in colnames
 colnames(data) <- colnames(data) %>% str_replace(" ", "_")
+
+data <- data[-c(1, 2, 13, 14, 15), ]
 
 write_graphs <- function(data, word) {
   one_word <- data[,word,]
@@ -83,11 +87,11 @@ write_graphs <- function(data, word) {
     # basic plot settings
     theme(legend.position = "top")
 
-  distanceFileName <-  paste0("./experiment/", word, "Distance.png")
+  distanceFileName <-  paste0(rootFolder, "/", word, "Distance.png")
   ggsave(distanceFileName, width = 10, height = 10, units = "cm")
 
-  fviz_nbclust(dist_mat, FUN = hcut, method = "silhouette")
-  clusterFileName <-  paste0("./experiment/", word, "NoOfClusters.png")
+  fviz_nbclust(dist_mat, FUN = hcut, method = "silhouette", k.max=5)
+  clusterFileName <-  paste0(rootFolder, "/", word, "NoOfClusters.png")
   ggsave(clusterFileName, width = 10, height = 10, units = "cm")
 
   # save the output of clustering
@@ -108,7 +112,7 @@ write_graphs <- function(data, word) {
   # match the order of rows in the data with the order of tip labels
   test <- test[match(names(clus), test$Name),]
 
-  dendrogramFileName <-  paste0("./experiment/", word, "Dendrogram.png")
+  dendrogramFileName <-  paste0(rootFolder, "/",  word, "Dendrogram.png")
 
   png(dendrogramFileName)
 
