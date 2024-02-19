@@ -19,7 +19,7 @@ library(factoextra)
 rootFolder <- "./output"
 
 # read the main table
-data <- fread(paste(rootFolder, "normalized.csv", sep="/")) %>%
+data <- fread(paste(rootFolder, "normalized.csv", sep = "/")) %>%
   # flip the order of rows and columns
   t() %>%
   # change the format to data frame
@@ -38,10 +38,17 @@ data <- data %>% select(Language, everything())
 # removing spaces in colnames
 colnames(data) <- colnames(data) %>% str_replace(" ", "_")
 
-data <- data[-c(1, 2, 13, 14, 15), ]
+data <- data[-c(2, 13, 14, 15),]
 
-write_graphs <- function(data, word) {
-  one_word <- data[,word,]
+write_graphs <- function(data) {
+  languages <- c("swo", "gyeli", "bekwel", "bekol", "konzime", "makaa", "mpiemo", "kwasio", "njem", "shiwa")
+  french <- sub(" ", "_", data[1])
+  french <- sub("/", "_", french)
+  french <- sub("\\(", "_", french)
+  french <- sub("\\)", "_", french)
+
+  one_word <- data[-1]
+  print(french)
   dist_mat <- stringdist::stringdistmatrix(one_word, one_word,
                                            method = "lv",
                                            useNames = "string")
@@ -57,8 +64,8 @@ write_graphs <- function(data, word) {
   }
 
   # add row names and column names
-  rownames(dist_mat) <- data$Language
-  colnames(dist_mat) <- data$Language
+  rownames(dist_mat) <- languages
+  colnames(dist_mat) <- languages
 
   # visualization
 
@@ -87,11 +94,11 @@ write_graphs <- function(data, word) {
     # basic plot settings
     theme(legend.position = "top")
 
-  distanceFileName <-  paste0(rootFolder, "/", word, "Distance.png")
+  distanceFileName <- paste0(rootFolder, "/", french, "Distance.png")
   ggsave(distanceFileName, width = 10, height = 10, units = "cm")
 
-  fviz_nbclust(dist_mat, FUN = hcut, method = "silhouette", k.max=5)
-  clusterFileName <-  paste0(rootFolder, "/", word, "NoOfClusters.png")
+  fviz_nbclust(dist_mat, FUN = hcut, method = "silhouette", k.max = 5)
+  clusterFileName <- paste0(rootFolder, "/", french, "NoOfClusters.png")
   ggsave(clusterFileName, width = 10, height = 10, units = "cm")
 
   # save the output of clustering
@@ -112,7 +119,7 @@ write_graphs <- function(data, word) {
   # match the order of rows in the data with the order of tip labels
   test <- test[match(names(clus), test$Name),]
 
-  dendrogramFileName <-  paste0(rootFolder, "/",  word, "Dendrogram.png")
+  dendrogramFileName <- paste0(rootFolder, "/", french, "Dendrogram.png")
 
   png(dendrogramFileName)
 
@@ -130,10 +137,12 @@ write_graphs <- function(data, word) {
   # add squares around the clusters
   rect.hclust(hclust_avg, k = 3)
 
-  dev.off()
+    dev.off()
 }
 
-write_graphs(data,  "accoucher")
+# write_graphs(data,  "accoucher")
+
+sapply(data[, 2:ncol(data)], write_graphs)
 
 # TODO: for each word?
 #

@@ -89,9 +89,10 @@ def write_output_to_file(outputfile, matrix):
 
 
 def word_to_html_page(word):
+    french_word = word_to_file_name(word['FR']).replace('.html', '')
     with open('templates/word_page.html', 'r') as file:
         html = file.read()
-    html = html.replace('${word}', word['FR'])
+    html = html.replace('${word}', french_word)
     table_html = '''<table class="table table-striped table-sm">
                  <thead class="thead-dark">
                  <tr><th scope="row"></th>'''
