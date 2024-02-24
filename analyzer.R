@@ -17,9 +17,12 @@ library(ggrepel)
 library(factoextra)
 
 rootFolder <- "./output"
+# rootFolder <- "."
 
 # read the main table
-data <- fread(paste(rootFolder, "normalized.csv", sep = "/")) %>%
+
+# data <- fread(paste(rootFolder, "oneWord.csv", sep = "/")) %>%
+  data <- fread(paste(rootFolder, "normalized.csv", sep = "/")) %>%
   # flip the order of rows and columns
   t() %>%
   # change the format to data frame
@@ -37,24 +40,25 @@ data <- data %>% select(Language, everything())
 
 # removing spaces in colnames
 colnames(data) <- colnames(data) %>% str_replace(" ", "_")
+errors <- c()
 
 data <- data[-c(2, 13, 14, 15),]
+languages <- c("swo", "gyeli", "bekwel", "bekol", "konzime", "makaa", "mpiemo", "kwasio", "njem", "shiwa")
 
 write_graphs <- function(data) {
-  languages <- c("swo", "gyeli", "bekwel", "bekol", "konzime", "makaa", "mpiemo", "kwasio", "njem", "shiwa")
   french <- sub(" ", "_", data[1])
   french <- sub("/", "_", french)
   french <- sub("\\(", "_", french)
   french <- sub("\\)", "_", french)
+  print(paste0("start: ", french))
 
-  one_word <- data[-1]
-  nonEmptyWords <- data.frame(languages, one_word)
-  nonEmptyWords <- nonEmptyWords %>% filter(!(one_word %in% c("", "NA")))
+  the_word <- data[-1]
+  nonEmptyWords <- data.frame(languages, the_word)
+  nonEmptyWords <- nonEmptyWords %>% filter(!(the_word %in% c("", "NA")))
 
   languages <- nonEmptyWords$languages
-  one_word <- nonEmptyWords$one_word
-  print(french)
-  dist_mat <- stringdist::stringdistmatrix(one_word, one_word,
+  the_word <- nonEmptyWords$the_word
+  dist_mat <- stringdist::stringdistmatrix(the_word, the_word,
                                            method = "lv",
                                            useNames = "string")
 
@@ -72,10 +76,9 @@ write_graphs <- function(data) {
   rownames(dist_mat) <- languages
   colnames(dist_mat) <- languages
 
-  # visualization
-
   dist_mat <- dist_mat %>% replace(is.na(.), 0)
 
+  # visualization
   tryCatch({
     # change the distances to multidimensional scaling
     fit <- cmdscale(dist_mat,
@@ -94,7 +97,7 @@ write_graphs <- function(data) {
       # make the plot
       ggplot(aes(x = x, y = y, label = Name)) +
       # add text instead of points
-      geom_text_repel() +
+      geom_text_repel(max.overlaps = Inf) +
       # white background
       theme_bw() +
       # basic plot settings
@@ -145,22 +148,28 @@ write_graphs <- function(data) {
     rect.hclust(hclust_avg, k = kmax)
 
     dev.off()
+    print(paste0("done: ", french))
   },
     error = function(e) {
       message('An Error Occurred')
       print(e)
+      assign("errors", c(french, errors), envir = .GlobalEnv)
+      print(c("error: ", errors))
+      print("end ex handler")
     },
     #if a warning occurs, tell me the warning
     warning = function(w) {
       message('A Warning Occurred')
       print(w)
+      assign("errors", c(french, errors), envir = .GlobalEnv)
+      print(c("warning: ", errors))
+      print("end ex handler")
       return(NA)
     }
   )
 }
 
-# write_graphs(data,  "accoucher")
-
 sapply(data[, 2:ncol(data)], write_graphs)
 
+print(c("errors", errors))
 print("done")
