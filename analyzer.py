@@ -26,8 +26,8 @@ def to_website(words, outputfolder):
         index_file.write(index_page)
         for word in words:
             file_name = word_to_file_name(word['FR'])
-            index_file.write(f'<a href="{file_name}">{word["FR"]}</a><br>')
-        index_file.write('</main></body></html>')
+            index_file.write(f'<div class="col"><a href="{file_name}">{word["FR"]}</a></div>\n')
+        index_file.write('</div></main></body></html>')
 
 
 def to_normalized_csv_file(inputfile, outputfile):
