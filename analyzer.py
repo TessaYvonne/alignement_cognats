@@ -26,7 +26,7 @@ def to_website(words, outputfolder):
         index_file.write(index_page)
         for word in words:
             file_name = word_to_file_name(word['FR'])
-            index_file.write(f'<div class="col"><a href="{file_name}">{word["FR"]}</a></div>\n')
+            index_file.write(f'<div class="col" onclick="location.href=\'{file_name}\';" style="cursor: pointer;">{word["FR"]}</div>\n')
         index_file.write('</div></main></body></html>')
 
 
