@@ -109,14 +109,3 @@ def read_and_process_excel_file(datafile):
             word_count += 1
         result.append(words)
     return result
-
-
-def create_graphics(datafile):
-
-    df = pd.read_csv(datafile, sep=';' , header='infer',  index_col=0,  engine=None, skiprows=None, nrows=None)
-    df.apply(lambda x: levenshtein.distance(df[0],  df[0]), axis=1)
-    for index, row in df.iterrows():
-        print (row)
-        print ("\n")
-
-# create_graphics('test/line9.csv')
