@@ -7,7 +7,6 @@ The element of each word is aligned: the first consonant in C1, the first vowel 
 import math
 
 import pandas as pd
-from textdistance import levenshtein
 
 from cleanup import cleanup_all
 
