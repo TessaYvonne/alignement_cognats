@@ -42,7 +42,7 @@ def word_data_to_csv(word):
         title.append('')
     data.append(title)
 
-    data.append(['', '', 'Pfx'] + columns)
+    data.append(['', '', 'Pfx', 'word'] + columns)
 
     language_data = word['languages']
     if len(language_data) == 0:
@@ -70,7 +70,6 @@ def word_data_to_normalized_csv(word):
     for language in language_data:
         data.append(language)
     return data
-#split_lines.append({'line': line['nº'], 'FR': line['FR'], 'languages': split_words})
 
 
 def matrix_to_csv(matrix):
