@@ -8,6 +8,7 @@ import math
 
 import pandas as pd
 
+from Word import Word
 from cleanup import cleanup_all
 
 # RECONSTRUCTION SECTION
@@ -24,9 +25,9 @@ def is_diacritic(letter):
 
 
 def reconstruction(raw_data, tokens):
-    if raw_data == "":
-        return ""
-    letters = list(raw_data)
+    if raw_data.text == "":
+        return raw_data
+    letters = list(raw_data.text)
     if letters[0] not in tokens:
         return raw_data
     token = letters[0]
@@ -47,13 +48,13 @@ def reconstruction(raw_data, tokens):
             if letter == ")":
                 if in_paren:
                     if position == position_of_opening_bracket + 1:
-                        return f"Warning: formatting error in '{raw_data}'"
+                        return f"Warning: formatting error in '{raw_data.text}'"
                     in_paren = False
                 else:
-                    return f"Warning: formatting error in '{raw_data}'"
+                    return f"Warning: formatting error in '{raw_data.text}'"
     if in_paren:
-        return f"Warning: formatting error in '{raw_data}'"
-    return result
+        return f"Warning: formatting error in '{raw_data.text}'"
+    return Word(result, raw_data.prefix)
 
 
 '''

@@ -1,6 +1,5 @@
-from reconstructions import tokens, read_and_process_excel_file
-
-from reconstructions import read_and_process_csv_file
+from Word import Word
+from reconstructions import tokens, read_and_process_excel_file, read_and_process_csv_file
 
 consonants = ["C", "ɲɟ̥", "g̥ʸ", "j̥", "r̥", "_", "?", "ɟ̥", "ndʰ", "nkʷ", "ndʰ", "kʷ", "mbʰ", "ʁ", "bʰ", "dʰ", "P",
               "ˤ", "C", "Ǹ", "N", "T", "K", "w", "y", "j", "p", "b", "ɓ", "t", "d", "ɗ", "c", "ɟ", "k", "g", "ɡ", "ʔ",
@@ -61,35 +60,17 @@ This part of the code splits words into letters. It then calls for the get_first
 '''
 
 
-class Word:
-    def __init__(self, text, letters):
-        self.text = text
-        self.letters = letters
-
-    def __str__(self):
-        '{ text: ' + self.text + ', letters: ' + str(self.letters) + ' }'
-
-    def __eq__(self, other):
-        if isinstance(other, self.__class__):
-            return self.__dict__ == other.__dict__
-        else:
-            return False
-
-    def __ne__(self, other):
-        return not self.__eq__(other)
-
-
 def split_word(word, line_number):
     result_letter_data = []
     error_found = False
-    remainder = word
+    remainder = word.text
     while len(remainder) > 0 and not error_found:
-        letter_data = get_first_letter(remainder, word, line_number)
+        letter_data = get_first_letter(remainder, word.text, line_number)
         if letter_data["letter"] == "error":
             error_found = True
         result_letter_data.append(letter_data)
         remainder = letter_data["word"]
-    return Word(word, result_letter_data)
+    return Word(word.text, word.prefix, result_letter_data)
 
 
 splittable_columns = ["PA80", "swo", "gyeli", "bekwel", "bekol", "konzime", "makaa", "mpiemo", "kwasio", "njyem",

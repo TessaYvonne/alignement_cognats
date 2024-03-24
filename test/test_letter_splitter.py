@@ -9,23 +9,23 @@ def test_letter_splitter_finds_kind_of_character():
 
 
 def test_letter_splitter_splits_word():
-    assert split_word("ɲɟà", 1) == Word("ɲɟà", [{"letter": "ɲɟ", "is_consonant": True, "word": "à"},
-                                                  {"letter": "à", "is_consonant": False, "word": ""}])
-    assert split_word("bw", 1) == Word("bw", [{"letter": "b", "is_consonant": True, "word": "w"},
-                                              {"letter": "w", "is_consonant": True, "word": ""}])
-    assert split_word("àw", 1) == Word("àw", [{"letter": "à", "is_consonant": False, "word": "w"},
-                                                {"letter": "w", "is_consonant": True, "word": ""}])
+    assert split_word(Word("ɲɟà", ""), 1) == Word("ɲɟà", "", [{"letter": "ɲɟ", "is_consonant": True, "word": "à"},
+                                                                {"letter": "à", "is_consonant": False, "word": ""}])
+    assert split_word(Word("bw", ""), 1) == Word("bw", "", [{"letter": "b", "is_consonant": True, "word": "w"},
+                                                            {"letter": "w", "is_consonant": True, "word": ""}])
+    assert split_word(Word("àw", ""), 1) == Word("àw", "", [{"letter": "à", "is_consonant": False, "word": "w"},
+                                                              {"letter": "w", "is_consonant": True, "word": ""}])
 
 
 def test_letter_splitter_rejects_unknown_letters():
-    assert split_word("a$̀", 1) == Word("a$̀", [{"letter": "a", "is_consonant": False, "word": "$̀"},
+    assert split_word(Word("a$̀",""), 1) == Word("a$̀", "", [{"letter": "a", "is_consonant": False, "word": "$̀"},
                                                 {"letter": "error", "is_consonant": False, "word": "$̀"}])
 
 
 def test_letter_splitter_accepts_special_tokens():
-    assert split_word("°à°w", 1) == Word("°à°w", [{"letter": "°à", "is_consonant": False, "word": "°w"},
+    assert split_word(Word("°à°w",""), 1) == Word("°à°w", "", [{"letter": "°à", "is_consonant": False, "word": "°w"},
                                                     {"letter": "°w", "is_consonant": True, "word": ""}])
-    assert split_word("*à*w", 1) == Word("*à*w", [{"letter": "*à", "is_consonant": False, "word": "*w"},
+    assert split_word(Word("*à*w",""), 1) == Word("*à*w", "", [{"letter": "*à", "is_consonant": False, "word": "*w"},
                                                     {"letter": "*w", "is_consonant": True, "word": ""}])
 
 

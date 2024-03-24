@@ -42,7 +42,7 @@ def word_data_to_csv(word):
         title.append('')
     data.append(title)
 
-    data.append(['', '', ''] + columns)
+    data.append(['', '', 'Pfx'] + columns)
 
     language_data = word['languages']
     if len(language_data) == 0:
@@ -51,7 +51,7 @@ def word_data_to_csv(word):
         for language in languages:
             one_language = language_data[language]
             output_format = letters_to_output_format(one_language.letters)
-            line = ['', language, one_language.text]
+            line = ['', language, one_language.prefix, one_language.text]
             for column in columns:
                 line.append(output_format[column])
             data.append(line)
@@ -95,7 +95,7 @@ def word_to_html_page(word):
     html = html.replace('${word}', french_word)
     table_html = '''<table class="table table-striped table-sm">
                  <thead class="thead-dark">
-                 <tr><th scope="row"></th>'''
+                 <tr><th scope="row">Language</th><th>Prefix</th>'''
     language_data = word['languages']
     number_of_columns = find_longest_row(language_data)
     for column in columns[:number_of_columns]:
@@ -103,8 +103,8 @@ def word_to_html_page(word):
     table_html += '</tr>'
 
     for language in languages:
-        table_html += f'<tr><td>{language}</td>'
         one_language = language_data[language]
+        table_html += f'<tr><td>{language}</td><td>{one_language.prefix}</td>'
         output_format = letters_to_output_format(one_language.letters)
         for column in columns[:number_of_columns]:
             table_html += f'<td>{output_format[column]}</td>'

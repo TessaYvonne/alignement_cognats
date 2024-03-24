@@ -39,7 +39,7 @@ def to_normalized_csv_file(inputfile, outputfile):
             output_line = ''
             output_line += word['nº'] + ';' + word['FR'] + ';'
             for column in splittable_columns:
-                output_line += word[column] + ';'
+                output_line += word[column].text + ';'
             output_line.strip(';')
             file.write(output_line + '\n')
 
