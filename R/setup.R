@@ -1,0 +1,8 @@
+install.packages("dplyr")
+install.packages('readxl')
+install.packages("stringr")
+install.packages("stringdist")
+install.packages("data.table")
+install.packages("ggplot2")
+install.packages("ggrepel")
+install.packages("factoextra")
