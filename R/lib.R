@@ -123,9 +123,10 @@ write_dendrogram_graph <- function(dist_mat, french_word, languages) {
 
   hclust_avg <- hclust(dist_mat %>% as.dist())
   cutree(hclust_avg, 3)
-  kmax <- length(languages) - 1
+  kmax <- min(length(languages) - 1, 3)
   plot(hclust_avg, cex = 1)
   rect.hclust(hclust_avg, k = kmax)
+  # rect.hclust(hclust_avg, k = 3)
 
   dev.off()
 
