@@ -1,3 +1,7 @@
+#' Read the word data from a csv file and transform into a data frame
+#'
+#' @param filename The name of the csv file
+#' @returns Dataframe with the data
 read_data <- function(filename) {
   data <- fread(filename) %>%
     t() %>%
@@ -21,6 +25,10 @@ read_data <- function(filename) {
   return(data)
 }
 
+#' Get the French word from the data we have about a word, replacing spaces, slashes and parenthesis to avoid problems later
+#'
+#' @param Data frame with the Franch word in column 1
+#' @returns Cleaned up Franch word
 get_french_word <- function(data) {
   french <- sub(" ", "_", data[1])
   french <- sub("/", "_", french)
@@ -30,6 +38,10 @@ get_french_word <- function(data) {
   return(french)
 }
 
+#' Remove French word and all empty columns from the data frame
+#'
+#' @param data Data frame for a word
+#' @returns Data frame without the French word and without empty columns
 clean_up_word_data <- function(data) {
   the_word <- data[-1]
   nonEmptyWords <- data.frame(languages, the_word)
@@ -38,6 +50,11 @@ clean_up_word_data <- function(data) {
   return(nonEmptyWords)
 }
 
+#' Calculate the normalized (0 to 1) distance between translations of the word and return as a distance matrix
+#'
+#' @param the_word  Word in several languages
+#' @param languages List of languages
+#' @returns normalized distance matrix using Levenshtein
 calculate_distance_matrix <- function(the_word, languages) {
   dist_mat <- stringdist::stringdistmatrix(the_word, the_word,
                                            method = "lv",
@@ -58,7 +75,11 @@ calculate_distance_matrix <- function(the_word, languages) {
   return (dist_mat)
 }
 
-write_distance_graph <- function(dist_mat, french) {
+#' Create a graph of the distance matrix
+#'
+#' @param dist_mat normalized distance matrix
+#' @param french_word french word, used to construct a name for the output file
+write_distance_graph <- function(dist_mat, french_word) {
   # change the distances to multidimensional scaling
   fit <- cmdscale(dist_mat,
                   eig = TRUE,
@@ -74,26 +95,38 @@ write_distance_graph <- function(dist_mat, french) {
       theme_bw() +
       theme(legend.position = "top")
 
-  distanceFileName <- paste0(rootFolder, "/", french, "Distance.png")
+  distanceFileName <- paste0(rootFolder, "/", french_word, "Distance.png")
   ggsave(distanceFileName, width = 10, height = 10, units = "cm")
 }
 
-write_dendrogram <- function(dist_mat, french, kmax) {
+#' Create number of clusters plot of the distance matrix
+#'
+#' @param dist_mat normalized distance matrix
+#' @param french_word french word, used to construct a name for the output file
+#' @param languages List of languages
+write_cluster_graph <- function(dist_mat, french_word, languages) {
+  kmax <- length(languages) - 1
   dist_mat <- dist_mat
   fviz_nbclust(dist_mat, FUN = hcut, method = "silhouette", k.max = kmax)
-  clusterFileName <- paste0(rootFolder, "/", french, "NoOfClusters.png")
+  clusterFileName <- paste0(rootFolder, "/", french_word, "NoOfClusters.png")
   ggsave(clusterFileName, width = 10, height = 10, units = "cm")
-  hclust_avg <- hclust(dist_mat %>% as.dist())
-  cutree(hclust_avg, 3)
-
-  dendrogramFileName <- paste0(rootFolder, "/", french, "Dendrogram.png")
-  png(dendrogramFileName)
-
-  return(hclust_avg)
 }
 
-write_cluster_graph <- function(hclust_avg, kmax) {
-  plot(hclust_avg,
-    cex = 1)
+#' Create dendogram graph of the distance matrix
+#'
+#' @param dist_mat normalized distance matrix
+#' @param french_word french word, used to construct a name for the output file
+#' @param languages List of languages
+write_dendrogram_graph <- function(dist_mat, french_word, languages) {
+  dendrogramFileName <- paste0(rootFolder, "/", french_word, "Dendrogram.png")
+  png(dendrogramFileName)
+
+  hclust_avg <- hclust(dist_mat %>% as.dist())
+  cutree(hclust_avg, 3)
+  kmax <- length(languages) - 1
+  plot(hclust_avg, cex = 1)
   rect.hclust(hclust_avg, k = kmax)
+
+  dev.off()
+
 }
