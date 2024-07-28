@@ -23,7 +23,7 @@ def test_tokens_are_added_to_string_with_closing_parenthesis_at_the_end():
 
 
 def test_error_is_returned_if_opening_parenthesis_is_last_character():
-    assert reconstruction(Word("*á(", ""), ["*"]) == "Warning: formatting error in '*á('"
+    assert reconstruction(Word("*á(", ""), ["*"]) == Word("Warning: formatting error in '*á('",'')
 
 
 def test_tokens_are_added_to_string_with_opening_parenthesis_at_the_beginning():
@@ -31,7 +31,7 @@ def test_tokens_are_added_to_string_with_opening_parenthesis_at_the_beginning():
 
 
 def test_error_is_returned_if_closing_parenthesis_is_missing():
-    assert reconstruction(Word("*á(ŋ", ""), ["*"]) == "Warning: formatting error in '*á(ŋ'"
+    assert reconstruction(Word("*á(ŋ", ""), ["*"]) == Word("Warning: formatting error in '*á(ŋ'",'')
 
 
 def test_tokens_are_added_to_string_with_more_than_one_element_between_parentheses():
@@ -43,7 +43,7 @@ def test_temp():
 
 
 def test_token_is_added_with_empty_string_in_parentheses():
-    assert reconstruction(Word("*á()", ""), ["*"]) == "Warning: formatting error in '*á()'"
+    assert reconstruction(Word("*á()", ""), ["*"]) == Word("Warning: formatting error in '*á()'",'')
 
 
 def test_string_of_spaces_remains_unchanged():
@@ -55,7 +55,7 @@ def test_empty_string_remains_unchanged():
 
 
 def test_error_is_returned_if_opening_parenthesis_is_missing():
-    assert reconstruction(Word("*áŋ)", ""), ["*"]) == "Warning: formatting error in '*áŋ)'"
+    assert reconstruction(Word("*áŋ)", ""), ["*"]) == Word("Warning: formatting error in '*áŋ)'",'')
 
 
 def test_reconstructions_adds_special_token():
@@ -70,7 +70,7 @@ def test_reconstructions_adds_special_token():
 def test_read_and_process_csv_file():
     data = read_and_process_csv_file("test_data_one_line.csv")
     expected = [
-        {"nº": "1.", "FR": "abandonner 1", "PA80": Word("ºcºìºnºà", ""), "swo": Word("", ""),
+        {"nº": "1.", "FR": "abandonner 1", "PA80": Word("°c°ì°n°à", "(N-)"), "swo": Word("", ""),
          "gyeli": Word("", ""), "bekwel": Word("cìn", "ɛ̀-"), "bekol": Word("", ""),
          "konzime": Word("cìnè", "è-"), "makaa": Word("", ""), "mpiemo": Word("", ""),
          "kwasio": Word("", ""), "njyem": Word("cììnò", "lè-"), "shiwa": Word("", ""),

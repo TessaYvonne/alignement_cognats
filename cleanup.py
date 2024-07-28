@@ -8,6 +8,8 @@ import copy
 
 from Word import Word
 
+OPEN_CIRCLE = "°"
+TOKENS = ["*", "º", OPEN_CIRCLE]
 
 def cleanup_slash(raw_data):
     index_of_slash = raw_data.find("/")
@@ -41,9 +43,9 @@ def cleanup_prefix(raw_data):
 def remove_duplicate_tokens(raw_data):
     if len(raw_data.text) == 0:
         return raw_data
-    first_letter_is_token = raw_data.text[0] in ["*", "º", "°"]
+    first_letter_is_token = raw_data.text[0] in TOKENS
     result = copy.deepcopy(raw_data)
-    for token in ["*", "º", "°"]:
+    for token in TOKENS:
         result.text = result.text.replace(token,"")
     if first_letter_is_token:
         result.text = raw_data.text[0] + result.text
@@ -54,6 +56,27 @@ def cleanup_all(raw_data):
     word_data = remove_duplicate_tokens(cleanup_prefix(cleanup_parenthesis(cleanup_slash(raw_data))))
     word_data.text = word_data.text.replace(" ","")
     word_data.prefix = word_data.prefix.replace(" ","")
+    return word_data
+
+
+def cleanup_pa80(raw_data):
+    if len(raw_data)>0:
+        while raw_data[0] in ['-', 'º', '°']:
+            raw_data = raw_data[1:]
+        word_data = Word(cleanup_slash(raw_data),"")
+        if raw_data.find('(') == 0:
+            closing_parenthesis = word_data.text.find(')')
+            if closing_parenthesis >=0:
+                word_data.prefix = word_data.text[:closing_parenthesis+1]
+                word_data.text = word_data.text[closing_parenthesis+1:]
+        else:
+            word_data = cleanup_prefix(word_data.text)
+        word_data.text = OPEN_CIRCLE + word_data.text
+        word_data = remove_duplicate_tokens(word_data)
+        word_data.text = word_data.text.replace(" ","")
+        word_data.prefix = word_data.prefix.replace(" ","")
+    else:
+        word_data = Word('','')
     return word_data
 
 

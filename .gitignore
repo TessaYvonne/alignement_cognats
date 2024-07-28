@@ -1,9 +1,10 @@
 words/
 testOutput/
 experiment/
-output/
+*output/
 
 x.csv
 .idea
 __pycache*
 .netlify
+.venv

@@ -1,5 +1,6 @@
 from Word import Word
-from reconstructions import tokens, read_and_process_excel_file, read_and_process_csv_file
+from reconstructions import read_and_process_excel_file, read_and_process_csv_file
+from cleanup import TOKENS
 
 consonants = ["C", "ɲɟ̥", "g̥ʸ", "j̥", "r̥", "_", "?", "ɟ̥", "ndʰ", "nkʷ", "ndʰ", "kʷ", "mbʰ", "ʁ", "bʰ", "dʰ", "P",
               "ˤ", "C", "Ǹ", "N", "T", "K", "w", "y", "j", "p", "b", "ɓ", "t", "d", "ɗ", "c", "ɟ", "k", "g", "ɡ", "ʔ",
@@ -20,7 +21,8 @@ vowels = ["ə̀", "ʃ", "ʔ", "~", "ṵ̌", "ṵ̂", "â̰", "à̰", "ḭ́", "i�
           "Á", "À", "Á", "À", "a", "á", "à", "á", "ā", "à", "ǎ", "â", "ə", "ə́", "ə̄", "ə̀", "ə̌", "ə̂", "U",
           "Ú", "Ù", "Ú", "Ù", "u", "ú", "ù", "ú", "ū", "ù", "ǔ", "û", "O", "Ó", "Ò", "Ó", "Ò", "o", "ó", "ò",
           "ó", "ō", "ò", "ǒ", "ô", "ʊ", "ʊ́", "ʊ̄", "ʊ̀", "ʊ̌", "ʊ̂", "ɔ", "ɔ́", "ɔ̄", "ɔ̀", "ɔ̌", "ɔ̂", "ø", "ǿ",
-          "ø̄", "ø̀", "ø̌", "ø̂", "V", "V́", "V̀"]
+          "ø̄", "ø̀", "ø̌", "ø̂", "V", "V́", "V̀",
+          "(", ")"]
 '''
 This part of the code determines weather a given character is a consonant or a vowel, based on the list of consonants and vowels it receives as input.
 If the character is not in the consonant list, it will check the vowel list, and finally return the character, say if it is a consonant or not, then remove the character from the word it is reading, until all the characters have been treated.
@@ -30,7 +32,7 @@ If the character is not in the consonant list, it will check the vowel list, and
 def get_first_letter(remainder, word, line_number):
     candidate_consonant = ""
     the_token = ""
-    if remainder[0] in tokens:
+    if remainder[0] in TOKENS:
         the_token = remainder[0]
         remainder = remainder[1:]
     for consonant in consonants:

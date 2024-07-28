@@ -9,7 +9,7 @@ import math
 import pandas as pd
 
 from Word import Word
-from cleanup import cleanup_all
+from cleanup import cleanup_all, cleanup_pa80, TOKENS
 
 # RECONSTRUCTION SECTION
 '''
@@ -24,11 +24,11 @@ def is_diacritic(letter):
     return (letter >= "\u02B0" and letter <= "\u02FF") or (letter >= "\u0300" and letter <= "\u036F")
 
 
-def reconstruction(raw_data, tokens):
+def reconstruction(raw_data, TOKENS):
     if raw_data.text == "":
         return raw_data
     letters = list(raw_data.text)
-    if letters[0] not in tokens:
+    if letters[0] not in TOKENS:
         return raw_data
     token = letters[0]
     result = ""
@@ -48,12 +48,12 @@ def reconstruction(raw_data, tokens):
             if letter == ")":
                 if in_paren:
                     if position == position_of_opening_bracket + 1:
-                        return f"Warning: formatting error in '{raw_data.text}'"
+                        return Word(f"Warning: formatting error in '{raw_data.text}'",'')
                     in_paren = False
                 else:
-                    return f"Warning: formatting error in '{raw_data.text}'"
+                    return Word(f"Warning: formatting error in '{raw_data.text}'",'')
     if in_paren:
-        return f"Warning: formatting error in '{raw_data.text}'"
+        return Word(f"Warning: formatting error in '{raw_data.text}'",'')
     return Word(result, raw_data.prefix)
 
 
@@ -63,10 +63,10 @@ Then it splits lines into cells. The words in the cells are added to a Python di
 '''
 
 column_headers = ["nº","FR","PA80","swo","gyeli","bekwel","bekol","konzime","makaa","mpiemo","kwasio","njyem","shiwa","BC (BLR3)","Reconstr. Régionales (BLR 3)","Reconstr. Mougiama, Hombert"]
-tokens = ["*", "º", "°"]
 
 
 def read_and_process_csv_file(datafile):
+    PA80_INDEX = 2
     with open(datafile) as file:
         result = []
         skip_line = True
@@ -82,8 +82,10 @@ def read_and_process_csv_file(datafile):
             for cell in cells:
                 if word_count <= 1:
                     words.update({column_headers[word_count]:cell.strip()})
+                elif word_count == PA80_INDEX:
+                    words.update({column_headers[word_count]:reconstruction(cleanup_pa80(cell), TOKENS)})
                 else:
-                    words.update({column_headers[word_count]:reconstruction(cleanup_all(cell), tokens)})
+                    words.update({column_headers[word_count]:reconstruction(cleanup_all(cell), TOKENS)})
                 word_count += 1
             result.append(words)
     return result
@@ -105,7 +107,7 @@ def read_and_process_excel_file(datafile):
             if word_count <= 1:
                 words.update({column_headers[word_count]:cell.strip()})
             else:
-                words.update({column_headers[word_count]:reconstruction(cleanup_all(cell), tokens)})
+                words.update({column_headers[word_count]:reconstruction(cleanup_all(cell), TOKENS)})
             word_count += 1
         result.append(words)
     return result
